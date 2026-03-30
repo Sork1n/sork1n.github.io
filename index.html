@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting...</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        
+        /* Phase 0: The Timer */
+        #countdown-container {
+            display: flex;
+        }
+        #countdown {
+            font-size: 4rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+
+        /* Phase 1: The Payload (Hidden until zero) */
+        #content-container {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            max-width: 600px;
+            padding: 20px;
+        }
+        .download-btn {
+            background-color: #00ff00;
+            color: #000;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 3px;
+            border: 2px solid #00ff00;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #000;
+            color: #00ff00;
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #cccccc;
+        }
+        a.form-link {
+            color: #00ff00;
+            font-size: 1.2rem;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="countdown-container">
+        <div id="countdown">--:--:--</div>
+    </div>
+
+    <div id="content-container">
+        <a href="img.png" download="img.png" class="download-btn">DOWNLOAD FILE</a>
+        <p>The link below is not for now, don't even bother until specifically mentioned. For now, focus on the image you downloaded.</p>
+        <a href="https://forms.gle/BN9Zsx4f53rsbQ3VA" target="_blank" class="form-link">https://forms.gle/BN9Zsx4f53rsbQ3VA</a>
+    </div>
+
+    <script>
+        // Set exactly to March 30, 2026, 13:00:00 AZT (Baku Time is UTC+4)
+        const countDownDate = new Date("2026-03-30T13:00:00+04:00").getTime();
+
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // If timer hits zero, swap the views
+            if (distance <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById("countdown-container").style.display = "none";
+                document.getElementById("content-container").style.display = "flex";
+            } else {
+                // Calculate hours, minutes, seconds
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Add leading zeros for style (e.g., 09:05:02)
+                const h = hours < 10 ? "0" + hours : hours;
+                const m = minutes < 10 ? "0" + minutes : minutes;
+                const s = seconds < 10 ? "0" + seconds : seconds;
+
+                document.getElementById("countdown").innerHTML = h + ":" + m + ":" + s;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
